@@ -1,6 +1,6 @@
-import { Input } from '@nextui-org/react'
-import { Eye, EyeOff, Lock, Mail } from 'lucide-react'
+import { Lock, Mail } from 'lucide-react'
 
+import FormField from '../components/FormField'
 import useToggle from '../hooks/useToggle'
 import AuthLayout from '../layout/AuthLayout'
 
@@ -13,32 +13,24 @@ const LoginPage = () => {
       subtitle='Sign in to your account to manage your schedule and events.'
     >
       <form className='bg-white rounded-lg space-y-5'>
-        <Input
+        <FormField
           label='Email'
           type='email'
+          name='email'
           placeholder='Enter your email'
-          startContent={
-            <Mail />
-          }
+          icon={<Mail />}
         />
 
-        <Input
+        <FormField
           label='Password'
           type='password'
+          name='password'
           placeholder='Enter your password'
-          startContent={
-            <Lock />
-          }
-          endContent={
-            <button type='button' onClick={setShowPassword}>
-              {
-                showPassword
-                  ? <EyeOff />
-                  : <Eye />
-              }
-            </button>
-          }
+          icon={<Lock />}
+          showPassword={showPassword}
+          onShowPassword={setShowPassword}
         />
+
       </form>
     </AuthLayout>
   )
