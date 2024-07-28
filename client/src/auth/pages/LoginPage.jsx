@@ -38,7 +38,6 @@ const LoginPage = () => {
 
         <Button
           type='submit'
-          block
           onClick={handleSubmit}
           className='w-full bg-black text-white'
         >
