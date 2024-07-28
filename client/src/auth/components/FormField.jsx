@@ -1,12 +1,19 @@
+import React from 'react'
+
 import { Input } from '@nextui-org/react'
 import { Eye, EyeOff } from 'lucide-react'
 
-const FormField = ({ icon, type, name, label, showPassword, onShowPassword, ...props }) => {
+const FormField = React.forwardRef(({ icon, type, name, label, showPassword, onShowPassword, ...props }, ref) => {
   return (
     <Input
+      ref={ref}
       name={name}
       label={label}
-      type={type}
+      type={
+        type === 'password' && showPassword
+          ? 'text'
+          : type
+      }
       startContent={icon}
       endContent={
         type === 'password' &&
@@ -21,6 +28,8 @@ const FormField = ({ icon, type, name, label, showPassword, onShowPassword, ...p
       {...props}
     />
   )
-}
+})
+
+FormField.displayName = 'FormField'
 
 export default FormField

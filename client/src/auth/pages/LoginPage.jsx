@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 import { Button } from '@nextui-org/react'
 import { Lock, Mail } from 'lucide-react'
@@ -10,10 +10,16 @@ import AuthLayout from '../layout/AuthLayout'
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useToggle(false)
-  const { register, handleSubmit } = useForm()
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  })
 
   const onSubmit = (data) => {
     sleep(2000)
+    console.log('Form submitted')
     console.log(data)
   }
 
@@ -23,28 +29,40 @@ const LoginPage = () => {
       subtitle='Sign in to your account to manage your schedule and events.'
     >
       <form className='bg-white rounded-lg space-y-5' onSubmit={handleSubmit(onSubmit)}>
-        <FormField
-          label='Email'
-          type='email'
+        <Controller
           name='email'
-          placeholder='Enter your email'
-          icon={<Mail />}
+          control={control}
+          render={({ field }) => (
+            <FormField
+              label='Email'
+              type='text'
+              placeholder='Enter your email'
+              icon={<Mail />}
+              {...field}
+            />
+          )}
         />
 
-        <FormField
-          label='Password'
-          type='password'
+        <Controller
           name='password'
-          placeholder='Enter your password'
-          icon={<Lock />}
-          showPassword={showPassword}
-          onShowPassword={setShowPassword}
+          control={control}
+          render={({ field }) => (
+            <FormField
+              label='Password'
+              type='password'
+              placeholder='Enter your password'
+              icon={<Lock />}
+              showPassword={showPassword}
+              onShowPassword={setShowPassword}
+              {...field}
+            />
+          )}
         />
 
         <Button
           type='submit'
           className='w-full bg-black text-white'
-          isLoading={false}
+          // isLoading={false}
         >
           Sign In
         </Button>
