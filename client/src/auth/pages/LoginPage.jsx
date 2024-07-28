@@ -74,6 +74,11 @@ const LoginPage = () => {
           Sign In
         </Button>
       </form>
+
+      <p className='text-slate-400 mt-4 text-end'>
+        Don't have account? {' '}
+        <span className='text-black cursor-pointer font-semibold'>Register</span>
+      </p>
     </AuthLayout>
   )
 }
