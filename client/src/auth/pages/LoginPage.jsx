@@ -1,3 +1,4 @@
+import { Button } from '@nextui-org/react'
 import { Lock, Mail } from 'lucide-react'
 
 import FormField from '../components/FormField'
@@ -6,6 +7,10 @@ import AuthLayout from '../layout/AuthLayout'
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useToggle(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+  }
 
   return (
     <AuthLayout
@@ -31,6 +36,14 @@ const LoginPage = () => {
           onShowPassword={setShowPassword}
         />
 
+        <Button
+          type='submit'
+          block
+          onClick={handleSubmit}
+          className='w-full bg-black text-white'
+        >
+          Sign In
+        </Button>
       </form>
     </AuthLayout>
   )
