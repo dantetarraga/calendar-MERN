@@ -32,11 +32,16 @@ const LoginPage = () => {
         <Controller
           name='email'
           control={control}
-          render={({ field }) => (
+          rules={{
+            required: 'Email is required',
+            pattern: { value: /\S+@\S+\.\S+/, message: 'Invalid email' }
+          }}
+          render={({ field, fieldState: { error } }) => (
             <FormField
               label='Email'
               type='text'
               placeholder='Enter your email'
+              error={error}
               icon={<Mail />}
               {...field}
             />
@@ -46,7 +51,8 @@ const LoginPage = () => {
         <Controller
           name='password'
           control={control}
-          render={({ field }) => (
+          rules={{ required: 'Password is required' }}
+          render={({ field, fieldState: { error } }) => (
             <FormField
               label='Password'
               type='password'
@@ -54,6 +60,7 @@ const LoginPage = () => {
               icon={<Lock />}
               showPassword={showPassword}
               onShowPassword={setShowPassword}
+              error={error}
               {...field}
             />
           )}

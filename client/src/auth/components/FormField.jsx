@@ -1,9 +1,9 @@
-import React from 'react'
+import { cloneElement, forwardRef } from 'react'
 
 import { Input } from '@nextui-org/react'
 import { Eye, EyeOff } from 'lucide-react'
 
-const FormField = React.forwardRef(({ icon, type, name, label, showPassword, onShowPassword, ...props }, ref) => {
+const FormField = forwardRef(({ icon, type, name, label, showPassword, onShowPassword, error, ...props }, ref) => {
   return (
     <Input
       ref={ref}
@@ -14,7 +14,10 @@ const FormField = React.forwardRef(({ icon, type, name, label, showPassword, onS
           ? 'text'
           : type
       }
-      startContent={icon}
+      startContent={cloneElement(icon, {
+        size: 20,
+        color: error && '#F31260'
+      })}
       endContent={
         type === 'password' &&
           <button type='button' onClick={onShowPassword}>
@@ -25,6 +28,8 @@ const FormField = React.forwardRef(({ icon, type, name, label, showPassword, onS
             }
           </button>
       }
+      isInvalid={!!error}
+      errorMessage={error?.message}
       {...props}
     />
   )
