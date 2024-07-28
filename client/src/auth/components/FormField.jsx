@@ -2,7 +2,6 @@ import { Input } from '@nextui-org/react'
 import { Eye, EyeOff } from 'lucide-react'
 
 const FormField = ({ icon, type, name, label, showPassword, onShowPassword, ...props }) => {
-  console.log(showPassword)
   return (
     <Input
       name={name}
