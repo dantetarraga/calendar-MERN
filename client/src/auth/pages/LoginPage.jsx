@@ -1,5 +1,5 @@
 import { Input } from '@nextui-org/react'
-import { Lock, Mail } from 'lucide-react'
+import { Eye, Lock, Mail } from 'lucide-react'
 
 import AuthLayout from '../layout/AuthLayout'
 
@@ -25,6 +25,11 @@ const LoginPage = () => {
           placeholder='Enter your password'
           startContent={
             <Lock />
+          }
+          endContent={
+            <button>
+              <Eye />
+            </button>
           }
         />
       </form>
