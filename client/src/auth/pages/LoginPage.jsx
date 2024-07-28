@@ -1,9 +1,12 @@
 import { Input } from '@nextui-org/react'
-import { Eye, Lock, Mail } from 'lucide-react'
+import { Eye, EyeOff, Lock, Mail } from 'lucide-react'
 
+import useToggle from '../hooks/useToggle'
 import AuthLayout from '../layout/AuthLayout'
 
 const LoginPage = () => {
+  const [showPassword, setShowPassword] = useToggle(false)
+
   return (
     <AuthLayout
       title='Welcome Back!'
@@ -27,8 +30,12 @@ const LoginPage = () => {
             <Lock />
           }
           endContent={
-            <button>
-              <Eye />
+            <button type='button' onClick={setShowPassword}>
+              {
+                showPassword
+                  ? <EyeOff />
+                  : <Eye />
+              }
             </button>
           }
         />
