@@ -1,4 +1,5 @@
 import { Controller, useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@nextui-org/react'
 import { Lock, Mail } from 'lucide-react'
@@ -77,7 +78,7 @@ const LoginPage = () => {
 
       <p className='text-slate-400 mt-4 text-end'>
         Don't have account? {' '}
-        <span className='text-black cursor-pointer font-semibold'>Register</span>
+        <Link to='/auth/register' className='text-black cursor-pointer font-semibold'>Register</Link>
       </p>
     </AuthLayout>
   )
