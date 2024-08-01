@@ -1,36 +1,40 @@
 import { cloneElement, forwardRef } from 'react'
+import { Controller } from 'react-hook-form'
 
 import { Input } from '@nextui-org/react'
 import { Eye, EyeOff } from 'lucide-react'
 
-const FormField = forwardRef(({ icon, type, name, label, showPassword, onShowPassword, error, ...props }, ref) => {
+const FormField = forwardRef(({ control, name, rules, icon, type, label, showPassword, onShowPassword, ...props }, ref) => {
   return (
-    <Input
-      ref={ref}
+    <Controller
       name={name}
-      label={label}
-      type={
-        type === 'password' && showPassword
-          ? 'text'
-          : type
-      }
-      startContent={icon && cloneElement(icon, {
-        size: 20,
-        color: error && '#F31260'
-      })}
-      endContent={
-        type === 'password' &&
-          <button type='button' onClick={onShowPassword}>
-            {
-              showPassword
-                ? <EyeOff />
-                : <Eye />
-            }
-          </button>
-      }
-      isInvalid={!!error}
-      errorMessage={error?.message}
-      {...props}
+      control={control}
+      rules={rules}
+      render={({ field, fieldState: { error } }) => (
+        <Input
+          {...field}
+          ref={ref}
+          label={label}
+          type={type === 'password' && showPassword
+            ? 'text'
+            : type}
+          startContent={icon && cloneElement(icon, {
+            size: 20,
+            color: error && '#F31260'
+          })}
+          endContent={
+            type === 'password' &&
+              <button type='button' onClick={onShowPassword}>
+                {showPassword
+                  ? <EyeOff />
+                  : <Eye />}
+              </button>
+          }
+          isInvalid={!!error}
+          errorMessage={error?.message}
+          {...props}
+        />
+      )}
     />
   )
 })

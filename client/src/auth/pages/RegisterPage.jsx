@@ -1,7 +1,7 @@
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { Button } from '@nextui-org/react'
-import { Mail } from 'lucide-react'
+import { Lock, Mail, User } from 'lucide-react'
 
 import FormField from '../components/FormField'
 import useToggle from '../hooks/useToggle'
@@ -11,6 +11,8 @@ const RegisterPage = () => {
   const [showPassword, setShowPassword] = useToggle(false)
   const { control, handleSubmit } = useForm({
     defaultValues: {
+      firstName: '',
+      lastName: '',
       email: '',
       password: ''
     }
@@ -22,81 +24,58 @@ const RegisterPage = () => {
       subtitle='Organize your time, plan your days, and never miss an important event.'
     >
       <form className='space-y-5'>
+        <div className='grid grid-cols-2 gap-5'>
+          <FormField
+            control={control}
+            name='firstName'
+            label='Name'
+            type='text'
+            placeholder='Enter your first name'
+            icon={<User />}
+            rules={{ required: 'Name is required' }}
+          />
 
-        <Controller
-          name='firstName'
+          <FormField
+            control={control}
+            name='lastName'
+            label='Last Name'
+            type='text'
+            placeholder='Enter your last name'
+            icon={<User />}
+            rules={{ required: 'Last name is required' }}
+          />
+        </div>
+
+        <FormField
           control={control}
-          rules={{ required: 'Name is required' }}
-          render={({ field, fieldState: { error } }) => (
-            <FormField
-              label='Name'
-              type='text'
-              placeholder='Enter your first name'
-              error={error}
-              icon={<Mail />}
-              {...field}
-            />
-          )}
-        />
-
-        <Controller
-          name='lastName'
-          control={control}
-          rules={{ required: 'Last name is required' }}
-          render={({ field, fieldState: { error } }) => (
-            <FormField
-              label='Username'
-              type='text'
-              placeholder='Enter your last name'
-              error={error}
-              icon={<Mail />}
-              {...field}
-            />
-          )}
-        />
-
-        <Controller
           name='email'
-          control={control}
-          rules={{
-            required: 'Email is required',
-            pattern: { value: /\S+@\S+\.\S+/, message: 'Invalid email' }
-          }}
-          render={({ field, fieldState: { error } }) => (
-            <FormField
-              label='Email'
-              type='text'
-              placeholder='Enter your email'
-              error={error}
-              icon={<Mail />}
-              {...field}
-            />
-          )}
+          label='Email'
+          type='text'
+          placeholder='Enter your email'
+          icon={<Mail />}
+          rules={{ required: 'Email is required' }}
         />
 
-        <Controller
-          name='password'
+        <FormField
           control={control}
+          name='password'
+          label='Password'
+          type='password'
+          placeholder='Enter your password'
+          icon={<Lock />}
+          showPassword={showPassword}
+          onShowPassword={setShowPassword}
           rules={{ required: 'Password is required' }}
-          render={({ field, fieldState: { error } }) => (
-            <FormField
-              label='Password'
-              type='password'
-              placeholder='Enter your password'
-              showPassword={showPassword}
-              onShowPassword={setShowPassword}
-              error={error}
-              {...field}
-            />
-          )}
         />
 
         <Button
           onClick={handleSubmit((data) => console.log(data))}
           block
-          className='w-full'
+          className='w-full bg-black text-white'
           type='submit'
-        />
+        >
+          Register
+        </Button>
       </form>
     </AuthLayout>
   )
