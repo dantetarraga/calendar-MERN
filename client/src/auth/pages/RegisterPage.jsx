@@ -24,7 +24,7 @@ const RegisterPage = () => {
       subtitle='Organize your time, plan your days, and never miss an important event.'
     >
       <form className='space-y-5'>
-        <div className='grid grid-cols-2 gap-5'>
+        <div className='grid md:grid-cols-2 gap-5 grid-cols-1'>
           <FormField
             control={control}
             name='firstName'
