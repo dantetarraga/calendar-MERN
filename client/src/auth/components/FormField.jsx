@@ -15,13 +15,12 @@ const FormField = forwardRef(({ control, name, rules, icon, type, label, showPas
           {...field}
           ref={ref}
           label={label}
-          type={type === 'password' && showPassword
-            ? 'text'
-            : type}
-          startContent={icon && cloneElement(icon, {
-            size: 20,
-            color: error && '#F31260'
-          })}
+          type={
+            type === 'password' && showPassword
+              ? 'text'
+              : type
+          }
+          startContent={icon && cloneElement(icon, { size: 20 })}
           endContent={
             type === 'password' &&
               <button type='button' onClick={onShowPassword}>
@@ -32,6 +31,11 @@ const FormField = forwardRef(({ control, name, rules, icon, type, label, showPas
           }
           isInvalid={!!error}
           errorMessage={error?.message}
+          color={
+            !!error
+              ? 'danger'
+              : 'default'
+          }
           {...props}
         />
       )}

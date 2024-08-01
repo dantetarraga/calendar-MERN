@@ -53,7 +53,10 @@ const RegisterPage = () => {
           type='text'
           placeholder='Enter your email'
           icon={<Mail />}
-          rules={{ required: 'Email is required' }}
+          rules={{
+            required: 'Email is required',
+            pattern: { value: /\S+@\S+\.\S+/, message: 'Invalid email' }
+          }}
         />
 
         <FormField

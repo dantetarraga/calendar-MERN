@@ -1,4 +1,4 @@
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 import { Button } from '@nextui-org/react'
@@ -30,41 +30,29 @@ const LoginPage = () => {
       subtitle='Sign in to your account to manage your schedule and events.'
     >
       <form className='space-y-5' onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name='email'
+        <FormField
           control={control}
+          name='email'
+          label='Email'
+          type='text'
+          placeholder='Enter your email'
+          icon={<Mail />}
           rules={{
             required: 'Email is required',
             pattern: { value: /\S+@\S+\.\S+/, message: 'Invalid email' }
           }}
-          render={({ field, fieldState: { error } }) => (
-            <FormField
-              label='Email'
-              type='text'
-              placeholder='Enter your email'
-              error={error}
-              icon={<Mail />}
-              {...field}
-            />
-          )}
         />
 
-        <Controller
-          name='password'
+        <FormField
           control={control}
+          name='password'
+          label='Password'
+          type='password'
+          placeholder='Enter your password'
+          icon={<Lock />}
+          showPassword={showPassword}
+          onShowPassword={setShowPassword}
           rules={{ required: 'Password is required' }}
-          render={({ field, fieldState: { error } }) => (
-            <FormField
-              label='Password'
-              type='password'
-              placeholder='Enter your password'
-              icon={<Lock />}
-              showPassword={showPassword}
-              onShowPassword={setShowPassword}
-              error={error}
-              {...field}
-            />
-          )}
         />
 
         <Button
