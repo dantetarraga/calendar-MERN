@@ -1,5 +1,6 @@
 import { Controller, useForm } from 'react-hook-form'
 
+import { Button } from '@nextui-org/react'
 import { Mail } from 'lucide-react'
 
 import FormField from '../components/FormField'
@@ -88,6 +89,13 @@ const RegisterPage = () => {
               {...field}
             />
           )}
+        />
+
+        <Button
+          onClick={handleSubmit((data) => console.log(data))}
+          block
+          auto
+          type='submit'
         />
       </form>
     </AuthLayout>
