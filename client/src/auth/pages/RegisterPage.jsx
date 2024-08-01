@@ -94,7 +94,7 @@ const RegisterPage = () => {
         <Button
           onClick={handleSubmit((data) => console.log(data))}
           block
-          auto
+          className='w-full'
           type='submit'
         />
       </form>
