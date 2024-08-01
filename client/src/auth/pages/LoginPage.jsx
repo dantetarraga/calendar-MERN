@@ -29,7 +29,7 @@ const LoginPage = () => {
       title='Welcome Back!'
       subtitle='Sign in to your account to manage your schedule and events.'
     >
-      <form className='bg-white rounded-lg space-y-5' onSubmit={handleSubmit(onSubmit)}>
+      <form className='space-y-5' onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name='email'
           control={control}

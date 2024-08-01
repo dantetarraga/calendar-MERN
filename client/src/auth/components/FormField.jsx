@@ -14,7 +14,7 @@ const FormField = forwardRef(({ icon, type, name, label, showPassword, onShowPas
           ? 'text'
           : type
       }
-      startContent={cloneElement(icon, {
+      startContent={icon && cloneElement(icon, {
         size: 20,
         color: error && '#F31260'
       })}
