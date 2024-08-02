@@ -21,6 +21,13 @@ const events = [
   {
     title: 'Reunión de equipo',
     notes: 'Discutir los avances del proyecto',
+    start: new Date(),
+    end: addHours(new Date(), 2),
+    bgColor: randomColor()
+  },
+  {
+    title: 'Reunión de equipo',
+    notes: 'Discutir los avances del proyecto',
     start: randomDate(),
     end: addHours(randomDate(), 2),
     bgColor: randomColor()
