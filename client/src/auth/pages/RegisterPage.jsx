@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@nextui-org/react'
 import { Lock, Mail, User } from 'lucide-react'
@@ -80,6 +81,11 @@ const RegisterPage = () => {
           Register
         </Button>
       </form>
+
+      <p className='text-slate-400 mt-4 text-end text-xs md:text-sm'>
+        Already have an account? {' '}
+        <Link to='/auth/login' className='text-black cursor-pointer font-semibold'>Log in</Link>
+      </p>
     </AuthLayout>
   )
 }
