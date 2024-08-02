@@ -161,8 +161,8 @@ const events = [
 ]
 
 const CalendarPage = () => {
-  const eventsStyleGetter = (event, start, end, isSelected) => {
-    console.log(event, start, end, isSelected)
+  // eslint-disable-next-line no-unused-vars
+  const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
       backgroundColor: event.bgColor,
       borderRadius: '0px',
@@ -187,7 +187,7 @@ const CalendarPage = () => {
         endAccessor='end'
         style={{ height: 'calc(100vh - 110px)' }}
         messages={getMessagesES()}
-        eventsPropsGetter={eventsStyleGetter}
+        eventPropGetter={eventStyleGetter}
       />
     </div>
   )
