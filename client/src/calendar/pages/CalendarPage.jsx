@@ -1,9 +1,9 @@
-import Navbar from '../components/Navbar'
+import { NavBar } from '../'
 
 const CalendarPage = () => {
   return (
     <div>
-      <Navbar />
+      <NavBar />
     </div>
   )
 }
