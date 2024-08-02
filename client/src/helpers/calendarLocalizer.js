@@ -6,7 +6,7 @@ import esEs from 'date-fns/locale/es'
 
 const locales = {
   'en-US': enUs,
-  'es-Es': esEs
+  es: esEs
 }
 
 export const localizer = dateFnsLocalizer({
