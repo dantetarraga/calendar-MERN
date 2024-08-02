@@ -5,7 +5,7 @@ import { addDays, addHours } from 'date-fns'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import { getMessagesES, localizer } from '../../helpers'
-import { NavBar } from '../'
+import { CalendarEvent, NavBar } from '../'
 
 function randomDate () {
   const start = new Date()
@@ -188,6 +188,9 @@ const CalendarPage = () => {
         style={{ height: 'calc(100vh - 110px)' }}
         messages={getMessagesES()}
         eventPropGetter={eventStyleGetter}
+        componets={{
+          event: CalendarEvent
+        }}
       />
     </div>
   )
