@@ -5,7 +5,7 @@ import { CalendarDays, LogOut } from 'lucide-react'
 
 const NavBar = () => {
   return (
-    <Navbar className='w-full bg-black text-white'>
+    <Navbar className='w-full bg-black text-white mb-10'>
       <NavbarBrand>
         <CalendarDays />
         <p className='font-bold text-inherit ml-3'>Dante</p>
