@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { Calendar } from 'react-big-calendar'
 
+import { useDisclosure } from '@nextui-org/react'
 import { addDays, addHours } from 'date-fns'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import { getMessagesES, localizer } from '../../helpers'
 import { CalendarEvent, NavBar } from '../'
+import CalendarModal from '../components/CalendarModal'
 
 function randomDate () {
   const start = new Date()
@@ -143,7 +145,8 @@ const events = [
 ]
 
 const CalendarPage = () => {
-  const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'weeek')
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [lastView] = useState(localStorage.getItem('lastView') || 'week')
 
   // eslint-disable-next-line no-unused-vars
   const eventStyleGetter = (event, start, end, isSelected) => {
@@ -176,7 +179,7 @@ const CalendarPage = () => {
       <Calendar
         culture='es'
         localizer={localizer}
-        defaultView='agenda'
+        defaultView={lastView}
         events={events}
         startAccessor='start'
         endAccessor='end'
@@ -190,6 +193,7 @@ const CalendarPage = () => {
         onSelectEvent={handleSelectEvent}
         onView={handleViewChange}
       />
+      <CalendarModal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} />
     </div>
   )
 }
