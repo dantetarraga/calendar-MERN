@@ -1,3 +1,5 @@
+import { Controller, Form, useForm } from 'react-hook-form'
+
 import {
   Modal,
   ModalBody,
@@ -5,9 +7,24 @@ import {
   ModalFooter,
   ModalHeader
 } from '@nextui-org/modal'
-import { Button, Divider } from '@nextui-org/react'
+import { Button, DatePicker, Divider, Input, Textarea } from '@nextui-org/react'
+import { addHours } from 'date-fns'
+
+import FormField from './FormField'
 
 const CalendarModal = ({ isOpen, onOpen, onOpenChange }) => {
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      title: '',
+      description: '',
+      startDateTime: new Date(),
+      endDateTime: addHours(new Date(), 2)
+    }
+  })
+  const onSubmit = (data) => {
+    console.log('submit', data)
+  }
+
   return (
     <>
       <Button onPress={onOpen}>Open Modal</Button>
@@ -15,33 +32,40 @@ const CalendarModal = ({ isOpen, onOpen, onOpenChange }) => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className='flex flex-col gap-1 text-2xl font-bold'>Nuevo Evento</ModalHeader>
+              <ModalHeader className='text-2xl font-bold'>Nuevo Evento</ModalHeader>
               <Divider />
+
               <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
-                  dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis.
-                  Velit duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod.
-                  Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur
-                  proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
+                <form onSubmit={handleSubmit(onSubmit)} id='create-event-form' className='space-y-5'>
+                  <FormField
+                    name='startDateTime'
+                    control={control}
+                    label='Fecha de inicio'
+                    component={DatePicker}
+                  />
+                  <FormField
+                    name='title'
+                    control={control}
+                    label='Título'
+                    placeholder='Título del evento'
+                    component={Input}
+                  />
+                  <FormField
+                    name='description'
+                    control={control}
+                    label='Descripción'
+                    placeholder='Descripción del evento'
+                    component={Textarea}
+                  />
+                </form>
               </ModalBody>
+
               <ModalFooter>
                 <Button color='danger' variant='light' onPress={onClose}>
-                  Close
+                  Cerrar
                 </Button>
-                <Button color='primary' onPress={onClose}>
-                  Action
+                <Button color='primary' onPress={onClose} form='create-event-form' type='submit'>
+                  Guardar
                 </Button>
               </ModalFooter>
             </>
