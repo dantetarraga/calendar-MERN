@@ -8,6 +8,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import '../styles/calendar.css'
 
 import { getMessagesES, localizer } from '../../helpers'
+import { hexToRgb } from '../../utils'
 import { CalendarEvent, NavBar } from '../'
 import CalendarModal from '../components/CalendarModal'
 
@@ -156,8 +157,11 @@ const CalendarPage = () => {
 
   // eslint-disable-next-line no-unused-vars
   const eventStyleGetter = (event, start, end, isSelected) => {
+    const { r, g, b } = hexToRgb(event.bgColor)
+
     const style = {
       border: `1.4px solid ${event.bgColor}`,
+      backgroundColor: `rgba(${r}, ${g}, ${b}, 0.1)`,
       borderRadius: '8px'
     }
 
