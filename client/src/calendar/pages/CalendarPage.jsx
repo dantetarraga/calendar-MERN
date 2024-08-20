@@ -136,6 +136,17 @@ const events = [
       id: 4,
       name: 'Ana'
     }
+  },
+  {
+    title: 'Reunión de cierre de año',
+    notes: 'Revisión de KPIs y planificación',
+    start: addDays(new Date(), 2),
+    end: addHours(addDays(new Date(), 2), 2),
+    bgColor: randomColor(),
+    user: {
+      id: 4,
+      name: 'Percy'
+    }
   }
 ]
 
@@ -146,10 +157,8 @@ const CalendarPage = () => {
   // eslint-disable-next-line no-unused-vars
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
-      backgroundColor: event.bgColor,
-      borderRadius: '0px',
-      opacity: 0.8,
-      color: 'white'
+      border: `1.4px solid ${event.bgColor}`,
+      borderRadius: '8px'
     }
 
     return {
