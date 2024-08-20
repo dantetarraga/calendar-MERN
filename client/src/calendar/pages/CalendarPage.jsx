@@ -5,16 +5,11 @@ import { useDisclosure } from '@nextui-org/react'
 import { addDays, addHours } from 'date-fns'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+import '../styles/calendar.css'
 
 import { getMessagesES, localizer } from '../../helpers'
 import { CalendarEvent, NavBar } from '../'
 import CalendarModal from '../components/CalendarModal'
-
-function randomDate () {
-  const start = new Date()
-  const end = addDays(start, 60)
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
-}
 
 function randomColor () {
   return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')
@@ -40,14 +35,14 @@ const events = [
     bgColor: randomColor(),
     user: {
       id: 1,
-      name: 'Juan'
+      name: 'Mario'
     }
   },
   {
     title: 'Presentación de ventas',
     notes: 'Presentar nuevo producto a cliente potencial',
     start: addDays(new Date(), 1),
-    end: addHours(randomDate(new Date(), 1), 1.5),
+    end: addHours(addDays(new Date()), 2),
     bgColor: randomColor(),
     user: {
       id: 2,
@@ -69,7 +64,7 @@ const events = [
     title: 'Almuerzo con el equipo',
     notes: 'Celebración de fin de proyecto',
     start: addDays(new Date(), 3),
-    end: addHours(randomDate(new Date(), 3), 2),
+    end: addHours(addDays(new Date()), 2),
     bgColor: randomColor(),
     user: {
       id: 4,
@@ -80,7 +75,7 @@ const events = [
     title: 'Revisión de código',
     notes: 'Revisar pull request #456',
     start: addDays(new Date(), 4),
-    end: addHours(addDays(new Date(), 4), 1),
+    end: addHours(addDays(new Date()), 1),
     bgColor: randomColor(),
     user: {
       id: 5,
@@ -91,7 +86,7 @@ const events = [
     title: 'Planificación de sprint',
     notes: 'Definir objetivos para próximo sprint',
     start: addDays(new Date(), 5),
-    end: addHours(randomDate(new Date()), 2),
+    end: addHours(addDays(new Date()), 2),
     bgColor: randomColor(),
     user: {
       id: 1,
@@ -102,7 +97,7 @@ const events = [
     title: 'Entrevista de candidato',
     notes: 'Entrevista para puesto de diseñador UX',
     start: addDays(new Date(), 2),
-    end: addHours(addDays(new Date(), 6), 1),
+    end: addHours(addDays(new Date(), 2), 1),
     bgColor: randomColor(),
     user: {
       id: 2,
@@ -113,7 +108,7 @@ const events = [
     title: 'Webinar de marketing',
     notes: 'Presentación de estrategia de contenidos',
     start: addDays(new Date(), 3),
-    end: addHours(addDays(new Date(), 7), 1.5),
+    end: addHours(addDays(new Date(), 1), 1.5),
     bgColor: randomColor(),
     user: {
       id: 3,
@@ -124,7 +119,7 @@ const events = [
     title: 'Mantenimiento de servidor',
     notes: 'Actualización de software y backups',
     start: addDays(new Date(), 4),
-    end: addHours(addDays(new Date(), 8), 4),
+    end: addHours(addDays(new Date(), 1), 4),
     bgColor: randomColor(),
     user: {
       id: 5,
@@ -135,7 +130,7 @@ const events = [
     title: 'Reunión de cierre de mes',
     notes: 'Revisión de KPIs y planificación',
     start: addDays(new Date(), 2),
-    end: addHours(addDays(new Date(), 9), 2),
+    end: addHours(addDays(new Date(), 2), 2),
     bgColor: randomColor(),
     user: {
       id: 4,
@@ -176,24 +171,26 @@ const CalendarPage = () => {
     <div>
       <NavBar />
 
-      <Calendar
-        culture='es'
-        localizer={localizer}
-        defaultView={lastView}
-        events={events}
-        startAccessor='start'
-        endAccessor='end'
-        style={{ height: 'calc(100vh - 110px)' }}
-        messages={getMessagesES()}
-        eventPropGetter={eventStyleGetter}
-        components={{
-          event: CalendarEvent
-        }}
-        onDoubleClickEvent={handleDoubleClick}
-        onSelectEvent={handleSelectEvent}
-        onView={handleViewChange}
-      />
-      <CalendarModal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} />
+      <main className='flex justify-center items-center flex-col'>
+        <Calendar
+          culture='es'
+          localizer={localizer}
+          defaultView={lastView}
+          events={events}
+          startAccessor='start'
+          endAccessor='end'
+          style={{ height: 'calc(100vh - 110px)', width: '1000px' }}
+          messages={getMessagesES()}
+          eventPropGetter={eventStyleGetter}
+          components={{
+            event: CalendarEvent
+          }}
+          onDoubleClickEvent={handleDoubleClick}
+          onSelectEvent={handleSelectEvent}
+          onView={handleViewChange}
+        />
+        <CalendarModal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} />
+      </main>
     </div>
   )
 }

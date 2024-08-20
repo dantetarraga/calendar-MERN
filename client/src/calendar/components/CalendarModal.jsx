@@ -1,5 +1,6 @@
-import { Controller, Form, useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
+import { parseZonedDateTime } from '@internationalized/date'
 import {
   Modal,
   ModalBody,
@@ -8,17 +9,15 @@ import {
   ModalHeader
 } from '@nextui-org/modal'
 import { Button, DatePicker, Divider, Input, Textarea } from '@nextui-org/react'
-import { addHours } from 'date-fns'
-
-import FormField from './FormField'
+import { I18nProvider } from '@react-aria/i18n'
 
 const CalendarModal = ({ isOpen, onOpen, onOpenChange }) => {
   const { control, handleSubmit } = useForm({
     defaultValues: {
       title: '',
       description: '',
-      startDateTime: new Date(),
-      endDateTime: addHours(new Date(), 2)
+      startDateTime: null,
+      endDateTime: null
     }
   })
   const onSubmit = (data) => {
@@ -37,25 +36,58 @@ const CalendarModal = ({ isOpen, onOpen, onOpenChange }) => {
 
               <ModalBody>
                 <form onSubmit={handleSubmit(onSubmit)} id='create-event-form' className='space-y-5'>
-                  <FormField
+                  <Controller
                     name='startDateTime'
                     control={control}
-                    label='Fecha de inicio'
-                    component={DatePicker}
+                    render={() => (
+                      <I18nProvider locale='es-ES'>
+                        <DatePicker
+                          label='Fecha y hora inicio'
+                          className='max-w-full'
+                          defaultValue={parseZonedDateTime('2022-11-07T00:45[America/Los_Angeles]')}
+                          labelPlacement='outside'
+                          hideTimeZone
+                        />
+                      </I18nProvider>
+                    )}
                   />
-                  <FormField
+
+                  <Controller
+                    name='endDateTime'
+                    control={control}
+                    render={() => (
+                      <I18nProvider locale='es-ES'>
+                        <DatePicker
+                          label='Fecha y hora fin'
+                          className='max-w-full'
+                          defaultValue={parseZonedDateTime('2024-11-07T00:45[America/Lima]')}
+                          labelPlacement='outside'
+                          hideTimeZone
+                        />
+                      </I18nProvider>
+                    )}
+                  />
+                  <Controller
                     name='title'
                     control={control}
-                    label='Título'
-                    placeholder='Título del evento'
-                    component={Input}
+                    render={({ field }) => (
+                      <Input
+                        label='Título'
+                        placeholder='Título del evento'
+                        {...field}
+                      />
+                    )}
                   />
-                  <FormField
+                  <Controller
                     name='description'
                     control={control}
-                    label='Descripción'
-                    placeholder='Descripción del evento'
-                    component={Textarea}
+                    render={({ field }) => (
+                      <Textarea
+                        label='Descripción'
+                        placeholder='Descripción del evento'
+                        {...field}
+                      />
+                    )}
                   />
                 </form>
               </ModalBody>
