@@ -1,6 +1,6 @@
 import { Controller, useForm } from 'react-hook-form'
 
-import { parseZonedDateTime } from '@internationalized/date'
+import { getLocalTimeZone, now } from '@internationalized/date'
 import {
   Modal,
   ModalBody,
@@ -12,7 +12,7 @@ import { Button, DatePicker, Divider, Input, Textarea } from '@nextui-org/react'
 import { I18nProvider } from '@react-aria/i18n'
 
 const CalendarModal = ({ isOpen, onOpen, onOpenChange }) => {
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
       title: '',
       description: '',
@@ -20,8 +20,10 @@ const CalendarModal = ({ isOpen, onOpen, onOpenChange }) => {
       endDateTime: null
     }
   })
+
   const onSubmit = (data) => {
     console.log('submit', data)
+    console.log(getValues('startDateTime'))
   }
 
   return (
@@ -44,9 +46,10 @@ const CalendarModal = ({ isOpen, onOpen, onOpenChange }) => {
                         <DatePicker
                           label='Fecha y hora inicio'
                           className='max-w-full'
-                          defaultValue={parseZonedDateTime('2022-11-07T00:45[America/Los_Angeles]')}
                           labelPlacement='outside'
                           hideTimeZone
+                          granularity='minute'
+                          defaultValue={now(getLocalTimeZone())}
                         />
                       </I18nProvider>
                     )}
@@ -60,9 +63,10 @@ const CalendarModal = ({ isOpen, onOpen, onOpenChange }) => {
                         <DatePicker
                           label='Fecha y hora fin'
                           className='max-w-full'
-                          defaultValue={parseZonedDateTime('2024-11-07T00:45[America/Lima]')}
                           labelPlacement='outside'
+                          granularity='minute'
                           hideTimeZone
+                          defaultValue={now(getLocalTimeZone())}
                         />
                       </I18nProvider>
                     )}

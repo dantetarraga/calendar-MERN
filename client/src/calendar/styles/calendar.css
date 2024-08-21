@@ -81,9 +81,12 @@
   margin-bottom: 2px;
 }
 
-.rbc-event-label {
-  border: 4px solid #F5F6F8;
-}
+/* .rbc-event-label {
+  border: 1px solid #F5F6F8;
+  padding: 2px 5px;
+  border-radius: 5px;
+  margin-bottom: 2px;
+} */
 
 
 /*
