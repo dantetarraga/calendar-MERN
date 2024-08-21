@@ -202,6 +202,7 @@ const CalendarPage = () => {
           onSelectEvent={handleSelectEvent}
           onView={handleViewChange}
         />
+
         <CalendarModal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} />
       </main>
     </div>
