@@ -1,4 +1,4 @@
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, get, useForm } from 'react-hook-form'
 
 import { getLocalTimeZone, now } from '@internationalized/date'
 import {
@@ -8,28 +8,30 @@ import {
   ModalFooter,
   ModalHeader
 } from '@nextui-org/modal'
-import { Button, DatePicker, Divider, Input, Textarea } from '@nextui-org/react'
+import { Button, DatePicker, DateRangePicker, Divider, Input, Textarea } from '@nextui-org/react'
 import { I18nProvider } from '@react-aria/i18n'
+import { differenceInSeconds, format } from 'date-fns'
 
-const CalendarModal = ({ isOpen, onOpen, onOpenChange }) => {
-  const { control, handleSubmit, getValues } = useForm({
+const CalendarModal = ({ isOpen, onOpen, onClose, onOpenChange }) => {
+  const { control, handleSubmit, getValues, formState } = useForm({
     defaultValues: {
       title: '',
       description: '',
-      startDateTime: null,
-      endDateTime: null
+      dateRange: {
+        startDateTime: now(getLocalTimeZone()),
+        endDateTime: now(getLocalTimeZone()).add({ hours: 1 })
+      }
     }
   })
 
   const onSubmit = (data) => {
-    console.log('submit', data)
-    console.log(getValues('startDateTime'))
+    onClose()
   }
 
   return (
     <>
       <Button onPress={onOpen}>Open Modal</Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onClose}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -38,52 +40,48 @@ const CalendarModal = ({ isOpen, onOpen, onOpenChange }) => {
 
               <ModalBody>
                 <form onSubmit={handleSubmit(onSubmit)} id='create-event-form' className='space-y-5'>
+
                   <Controller
-                    name='startDateTime'
+                    name='dateRange'
                     control={control}
                     render={() => (
                       <I18nProvider locale='es-ES'>
-                        <DatePicker
-                          label='Fecha y hora inicio'
-                          className='max-w-full'
-                          labelPlacement='outside'
+                        <DateRangePicker
+                          label='Duracion del evento'
                           hideTimeZone
-                          granularity='minute'
-                          defaultValue={now(getLocalTimeZone())}
+                          visibleMonths={2}
+                          defaultValue={{
+                            start: getValues('dateRange.startDateTime'),
+                            end: getValues('dateRange.endDateTime')
+                          }}
                         />
                       </I18nProvider>
                     )}
                   />
 
                   <Controller
-                    name='endDateTime'
-                    control={control}
-                    render={() => (
-                      <I18nProvider locale='es-ES'>
-                        <DatePicker
-                          label='Fecha y hora fin'
-                          className='max-w-full'
-                          labelPlacement='outside'
-                          granularity='minute'
-                          hideTimeZone
-                          defaultValue={now(getLocalTimeZone())}
-                        />
-                      </I18nProvider>
-                    )}
-                  />
-                  <Controller
                     name='title'
                     control={control}
-                    render={({ field }) => (
+                    rules={{ required: 'El título es requerido' }}
+                    render={({ field, fieldState: { error } }) => (
                       <Input
                         label='Título'
                         placeholder='Título del evento'
+                        isInvalid={!!error}
+                        errorMessage={error?.message}
+                        color={
+                          !!error
+                            ? 'danger'
+                            : 'default'
+                        }
                         {...field}
                       />
                     )}
                   />
+
                   <Controller
                     name='description'
+                    rules={{ required: 'La descripción es requerida' }}
                     control={control}
                     render={({ field }) => (
                       <Textarea
@@ -97,10 +95,10 @@ const CalendarModal = ({ isOpen, onOpen, onOpenChange }) => {
               </ModalBody>
 
               <ModalFooter>
-                <Button color='danger' variant='light' onPress={onClose}>
+                <Button color='danger' variant='flat' onPress={onClose}>
                   Cerrar
                 </Button>
-                <Button color='primary' onPress={onClose} form='create-event-form' type='submit'>
+                <Button color='primary' form='create-event-form' type='submit'>
                   Guardar
                 </Button>
               </ModalFooter>

@@ -152,7 +152,7 @@ const events = [
 ]
 
 const CalendarPage = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
   const [lastView] = useState(localStorage.getItem('lastView') || 'week')
 
   // eslint-disable-next-line no-unused-vars
@@ -161,7 +161,7 @@ const CalendarPage = () => {
 
     const style = {
       border: `1.4px solid ${event.bgColor}`,
-      backgroundColor: `rgba(${r}, ${g}, ${b}, 0.1)`,
+      backgroundColor: `rgba(${r}, ${g}, ${b}, 0.2)`,
       borderRadius: '8px'
     }
 
@@ -203,7 +203,7 @@ const CalendarPage = () => {
           onView={handleViewChange}
         />
 
-        <CalendarModal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} />
+        <CalendarModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} onOpenChange={onOpenChange} />
       </main>
     </div>
   )
