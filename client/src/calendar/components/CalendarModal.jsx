@@ -1,4 +1,4 @@
-import { Controller, get, useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 import { getLocalTimeZone, now } from '@internationalized/date'
 import {
@@ -8,12 +8,11 @@ import {
   ModalFooter,
   ModalHeader
 } from '@nextui-org/modal'
-import { Button, DatePicker, DateRangePicker, Divider, Input, Textarea } from '@nextui-org/react'
+import { Button, DateRangePicker, Divider, Input, Textarea } from '@nextui-org/react'
 import { I18nProvider } from '@react-aria/i18n'
-import { differenceInSeconds, format } from 'date-fns'
 
 const CalendarModal = ({ isOpen, onOpen, onClose, onOpenChange }) => {
-  const { control, handleSubmit, getValues, formState } = useForm({
+  const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
       title: '',
       description: '',
@@ -25,6 +24,7 @@ const CalendarModal = ({ isOpen, onOpen, onClose, onOpenChange }) => {
   })
 
   const onSubmit = (data) => {
+    console.log(data)
     onClose()
   }
 
