@@ -11,7 +11,10 @@ import {
 import { Button, DateRangePicker, Divider, Input, Textarea } from '@nextui-org/react'
 import { I18nProvider } from '@react-aria/i18n'
 
-const CalendarModal = ({ isOpen, onOpen, onClose, onOpenChange }) => {
+import { useUiStore } from '../../hook/useUiStore'
+
+const CalendarModal = ({ onOpen, onClose, onOpenChange }) => {
+  const { isDateModalOpen } = useUiStore()
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
       title: '',
@@ -31,7 +34,7 @@ const CalendarModal = ({ isOpen, onOpen, onClose, onOpenChange }) => {
   return (
     <>
       <Button onPress={onOpen}>Open Modal</Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onClose}>
+      <Modal isOpen={isDateModalOpen} onOpenChange={onOpenChange} onClose={onClose}>
         <ModalContent>
           {(onClose) => (
             <>
