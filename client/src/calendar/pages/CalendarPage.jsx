@@ -8,6 +8,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import '../styles/calendar.css'
 
 import { getMessagesES, localizer } from '../../helpers'
+import { useUiStore } from '../../hook/useUiStore'
 import { hexToRgb } from '../../utils'
 import { CalendarEvent, NavBar } from '../'
 import CalendarModal from '../components/CalendarModal'
@@ -153,6 +154,7 @@ const events = [
 
 const CalendarPage = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+  const { openDateModal } = useUiStore()
   const [lastView] = useState(localStorage.getItem('lastView') || 'week')
 
   // eslint-disable-next-line no-unused-vars
@@ -170,8 +172,8 @@ const CalendarPage = () => {
     }
   }
 
-  const handleDoubleClick = (event) => {
-    console.log({ doubleClick: event })
+  const handleDoubleClick = () => {
+    openDateModal()
   }
 
   const handleSelectEvent = (event) => {

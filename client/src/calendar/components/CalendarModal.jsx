@@ -13,8 +13,8 @@ import { I18nProvider } from '@react-aria/i18n'
 
 import { useUiStore } from '../../hook/useUiStore'
 
-const CalendarModal = ({ onOpen, onClose, onOpenChange }) => {
-  const { isDateModalOpen } = useUiStore()
+const CalendarModal = ({ onOpenChange }) => {
+  const { isDateModalOpen, closeDateModal } = useUiStore()
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
       title: '',
@@ -28,13 +28,12 @@ const CalendarModal = ({ onOpen, onClose, onOpenChange }) => {
 
   const onSubmit = (data) => {
     console.log(data)
-    onClose()
+    // onClose()
   }
 
   return (
     <>
-      <Button onPress={onOpen}>Open Modal</Button>
-      <Modal isOpen={isDateModalOpen} onOpenChange={onOpenChange} onClose={onClose}>
+      <Modal isOpen={isDateModalOpen} onOpenChange={onOpenChange} onClose={closeDateModal}>
         <ModalContent>
           {(onClose) => (
             <>
