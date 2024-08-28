@@ -7,13 +7,14 @@ function randomColor () {
 
 const tempEvents = [
   {
+    _id: 1,
     title: 'Reunión de equipo',
     notes: 'Discutir los avances del proyecto',
     start: new Date(),
     end: addHours(new Date(), 2),
     bgColor: randomColor(),
     user: {
-      id: 1,
+      _id: 1,
       name: 'Juan'
     }
   },
@@ -24,7 +25,7 @@ const tempEvents = [
     end: addHours(new Date(), 2),
     bgColor: randomColor(),
     user: {
-      id: 1,
+      _id: 1,
       name: 'Mario'
     }
   },
@@ -35,7 +36,7 @@ const tempEvents = [
     end: addHours(addDays(new Date()), 2),
     bgColor: randomColor(),
     user: {
-      id: 2,
+      _id: 2,
       name: 'María'
     }
   },
@@ -46,7 +47,7 @@ const tempEvents = [
     end: addHours(addDays(new Date(), 2), 3),
     bgColor: randomColor(),
     user: {
-      id: 3,
+      _id: 3,
       name: 'Carlos'
     }
   },
@@ -57,7 +58,7 @@ const tempEvents = [
     end: addHours(addDays(new Date()), 2),
     bgColor: randomColor(),
     user: {
-      id: 4,
+      _id: 4,
       name: 'Ana'
     }
   },
@@ -68,7 +69,7 @@ const tempEvents = [
     end: addHours(addDays(new Date()), 1),
     bgColor: randomColor(),
     user: {
-      id: 5,
+      _id: 5,
       name: 'Pedro'
     }
   },
@@ -79,40 +80,40 @@ const tempEvents = [
     end: addHours(addDays(new Date()), 2),
     bgColor: randomColor(),
     user: {
-      id: 1,
+      _id: 1,
       name: 'Juan'
     }
   },
   {
-    title: 'Entrevista de candidato',
+    title: 'Entrevista de cand_idato',
     notes: 'Entrevista para puesto de diseñador UX',
     start: addDays(new Date(), 2),
     end: addHours(addDays(new Date(), 2), 1),
     bgColor: randomColor(),
     user: {
-      id: 2,
+      _id: 2,
       name: 'María'
     }
   },
   {
     title: 'Webinar de marketing',
-    notes: 'Presentación de estrategia de contenidos',
+    notes: 'Presentación de estrategia de conten_idos',
     start: addDays(new Date(), 3),
     end: addHours(addDays(new Date(), 1), 1.5),
     bgColor: randomColor(),
     user: {
-      id: 3,
+      _id: 3,
       name: 'Carlos'
     }
   },
   {
-    title: 'Mantenimiento de servidor',
+    title: 'Mantenimiento de serv_idor',
     notes: 'Actualización de software y backups',
     start: addDays(new Date(), 4),
     end: addHours(addDays(new Date(), 1), 4),
     bgColor: randomColor(),
     user: {
-      id: 5,
+      _id: 5,
       name: 'Pedro'
     }
   },
@@ -123,7 +124,7 @@ const tempEvents = [
     end: addHours(addDays(new Date(), 2), 2),
     bgColor: randomColor(),
     user: {
-      id: 4,
+      _id: 4,
       name: 'Ana'
     }
   },
@@ -134,19 +135,25 @@ const tempEvents = [
     end: addHours(addDays(new Date(), 2), 2),
     bgColor: randomColor(),
     user: {
-      id: 4,
+      _id: 4,
       name: 'Percy'
     }
   }
 ]
 
 const initialState = {
-  events: [tempEvents],
+  events: [...tempEvents],
   selectedEvent: null
 }
 
 export const calendarSlice = createSlice({
   name: 'calendarSlice',
   initialState,
-  reducers: {}
+  reducers: {
+    onSetActiveEvent: (state, { payload }) => {
+      state.selectedEvent = payload
+    }
+  }
 })
+
+export const { onSetActiveEvent } = calendarSlice.actions

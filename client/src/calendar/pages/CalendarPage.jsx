@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { Calendar } from 'react-big-calendar'
 
-import { useDisclosure } from '@nextui-org/react'
-
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import '../styles/calendar.css'
 
@@ -13,9 +11,8 @@ import { CalendarEvent, NavBar } from '../'
 import CalendarModal from '../components/CalendarModal'
 
 const CalendarPage = () => {
-  const { events } = useCalendarStore()
+  const { events, setActiveEvent } = useCalendarStore()
   const { openDateModal } = useUiStore()
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
   const [lastView] = useState(localStorage.getItem('lastView') || 'week')
 
   // eslint-disable-next-line no-unused-vars
@@ -33,14 +30,8 @@ const CalendarPage = () => {
     }
   }
 
-  const handleDoubleClick = () => {
-    openDateModal()
-  }
-
-  const handleSelectEvent = (event) => {
-    console.log({ click: event })
-  }
-
+  const handleDoubleClick = () => openDateModal()
+  const handleSelectEvent = (event) => setActiveEvent(event)
   const handleViewChange = (event) => localStorage.setItem('lastView', event)
 
   return (
@@ -66,7 +57,7 @@ const CalendarPage = () => {
           onView={handleViewChange}
         />
 
-        <CalendarModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} onOpenChange={onOpenChange} />
+        <CalendarModal />
       </main>
     </div>
   )
