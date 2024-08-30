@@ -40,8 +40,6 @@ const CalendarModal = ({ onOpenChange }) => {
           endDateTime: formatedDate(selectedEvent.end)
         }
       })
-
-      console.log(getValues())
     }
   }, [selectedEvent])
 
