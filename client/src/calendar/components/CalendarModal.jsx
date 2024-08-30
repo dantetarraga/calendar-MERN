@@ -9,8 +9,15 @@ import {
   ModalFooter,
   ModalHeader
 } from '@nextui-org/modal'
-import { Button, DateRangePicker, Divider, Input, Textarea } from '@nextui-org/react'
+import {
+  Button,
+  DateRangePicker,
+  Divider,
+  Input,
+  Textarea
+} from '@nextui-org/react'
 import { I18nProvider } from '@react-aria/i18n'
+import { Save } from 'lucide-react'
 
 import { useCalendarStore } from '../../hook'
 import { useUiStore } from '../../hook/useUiStore'
@@ -50,16 +57,25 @@ const CalendarModal = ({ onOpenChange }) => {
 
   return (
     <>
-      <Modal isOpen={isDateModalOpen} onOpenChange={onOpenChange} onClose={closeDateModal}>
+      <Modal
+        isOpen={isDateModalOpen}
+        onOpenChange={onOpenChange}
+        onClose={closeDateModal}
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className='text-2xl font-bold'>Nuevo Evento</ModalHeader>
+              <ModalHeader className='text-2xl font-bold'>
+                Nuevo Evento
+              </ModalHeader>
               <Divider />
 
               <ModalBody>
-                <form onSubmit={handleSubmit(onSubmit)} id='create-event-form' className='space-y-5'>
-
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  id='create-event-form'
+                  className='space-y-5'
+                >
                   <Controller
                     name='dateRange'
                     control={control}
@@ -88,11 +104,9 @@ const CalendarModal = ({ onOpenChange }) => {
                         placeholder='Título del evento'
                         isInvalid={!!error}
                         errorMessage={error?.message}
-                        color={
-                          !!error
-                            ? 'danger'
-                            : 'default'
-                        }
+                        color={!!error
+                          ? 'danger'
+                          : 'default'}
                         {...field}
                       />
                     )}
@@ -117,7 +131,12 @@ const CalendarModal = ({ onOpenChange }) => {
                 <Button color='danger' variant='flat' onPress={onClose}>
                   Cerrar
                 </Button>
-                <Button color='primary' form='create-event-form' type='submit'>
+                <Button
+                  color='primary'
+                  form='create-event-form'
+                  type='submit'
+                  endContent={<Save size={20} />}
+                >
                   Guardar
                 </Button>
               </ModalFooter>
