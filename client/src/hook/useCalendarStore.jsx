@@ -7,7 +7,7 @@ export const useCalendarStore = () => {
   const dispatch = useDispatch()
 
   const setActiveEvent = (calendarEvent) => {
-    dispatch(onSetActiveEvent(calendarEvent))
+    dispatch(onSetActiveEvent({ ...calendarEvent }))
   }
 
   return {

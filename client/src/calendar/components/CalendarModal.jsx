@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { getLocalTimeZone, now } from '@internationalized/date'
@@ -11,11 +12,14 @@ import {
 import { Button, DateRangePicker, Divider, Input, Textarea } from '@nextui-org/react'
 import { I18nProvider } from '@react-aria/i18n'
 
+import { useCalendarStore } from '../../hook'
 import { useUiStore } from '../../hook/useUiStore'
+import { formatedDate } from '../../utils'
 
 const CalendarModal = ({ onOpenChange }) => {
+  const { selectedEvent } = useCalendarStore()
   const { isDateModalOpen, closeDateModal } = useUiStore()
-  const { control, handleSubmit, getValues } = useForm({
+  const { control, handleSubmit, getValues, reset } = useForm({
     defaultValues: {
       title: '',
       description: '',
@@ -25,6 +29,21 @@ const CalendarModal = ({ onOpenChange }) => {
       }
     }
   })
+
+  useEffect(() => {
+    if (selectedEvent !== null) {
+      reset({
+        title: selectedEvent.title,
+        description: selectedEvent.notes,
+        dateRange: {
+          startDateTime: formatedDate(selectedEvent.start),
+          endDateTime: formatedDate(selectedEvent.end)
+        }
+      })
+
+      console.log(getValues())
+    }
+  }, [selectedEvent])
 
   const onSubmit = (data) => {
     console.log(data)

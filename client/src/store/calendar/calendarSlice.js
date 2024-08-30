@@ -33,7 +33,7 @@ const tempEvents = [
     title: 'Presentación de ventas',
     notes: 'Presentar nuevo producto a cliente potencial',
     start: addDays(new Date(), 1),
-    end: addHours(addDays(new Date()), 2),
+    end: addHours(addDays(new Date(), 1), 2),
     bgColor: randomColor(),
     user: {
       _id: 2,
@@ -55,7 +55,7 @@ const tempEvents = [
     title: 'Almuerzo con el equipo',
     notes: 'Celebración de fin de proyecto',
     start: addDays(new Date(), 3),
-    end: addHours(addDays(new Date()), 2),
+    end: addHours(addDays(new Date(), 7), 2),
     bgColor: randomColor(),
     user: {
       _id: 4,
@@ -66,7 +66,7 @@ const tempEvents = [
     title: 'Revisión de código',
     notes: 'Revisar pull request #456',
     start: addDays(new Date(), 4),
-    end: addHours(addDays(new Date()), 1),
+    end: addHours(addDays(new Date(), 4), 1),
     bgColor: randomColor(),
     user: {
       _id: 5,
@@ -77,7 +77,7 @@ const tempEvents = [
     title: 'Planificación de sprint',
     notes: 'Definir objetivos para próximo sprint',
     start: addDays(new Date(), 5),
-    end: addHours(addDays(new Date()), 2),
+    end: addHours(addDays(new Date()), 6),
     bgColor: randomColor(),
     user: {
       _id: 1,
@@ -87,8 +87,8 @@ const tempEvents = [
   {
     title: 'Entrevista de cand_idato',
     notes: 'Entrevista para puesto de diseñador UX',
-    start: addDays(new Date(), 2),
-    end: addHours(addDays(new Date(), 2), 1),
+    start: addDays(new Date(), 7),
+    end: addHours(addDays(new Date(), 7), 1),
     bgColor: randomColor(),
     user: {
       _id: 2,
@@ -99,7 +99,7 @@ const tempEvents = [
     title: 'Webinar de marketing',
     notes: 'Presentación de estrategia de conten_idos',
     start: addDays(new Date(), 3),
-    end: addHours(addDays(new Date(), 1), 1.5),
+    end: addHours(addDays(new Date(), 5), 1.5),
     bgColor: randomColor(),
     user: {
       _id: 3,
@@ -110,7 +110,7 @@ const tempEvents = [
     title: 'Mantenimiento de serv_idor',
     notes: 'Actualización de software y backups',
     start: addDays(new Date(), 4),
-    end: addHours(addDays(new Date(), 1), 4),
+    end: addHours(addDays(new Date(), 5), 4),
     bgColor: randomColor(),
     user: {
       _id: 5,
@@ -120,8 +120,8 @@ const tempEvents = [
   {
     title: 'Reunión de cierre de mes',
     notes: 'Revisión de KPIs y planificación',
-    start: addDays(new Date(), 2),
-    end: addHours(addDays(new Date(), 2), 2),
+    start: addDays(new Date(), 8),
+    end: addHours(addDays(new Date(), 10), 2),
     bgColor: randomColor(),
     user: {
       _id: 4,
@@ -132,7 +132,7 @@ const tempEvents = [
     title: 'Reunión de cierre de año',
     notes: 'Revisión de KPIs y planificación',
     start: addDays(new Date(), 2),
-    end: addHours(addDays(new Date(), 2), 2),
+    end: addHours(addDays(new Date(), 3), 2),
     bgColor: randomColor(),
     user: {
       _id: 4,
