@@ -7,8 +7,7 @@ import '../styles/calendar.css'
 import { getMessagesES, localizer } from '../../helpers'
 import { useCalendarStore, useUiStore } from '../../hook'
 import { hexToRgb } from '../../utils'
-import { CalendarEvent, NavBar } from '../'
-import CalendarModal from '../components/CalendarModal'
+import { CalendarEvent, CalendarModal, FabAddNew, NavBar } from '../'
 
 const CalendarPage = () => {
   const { events, setActiveEvent } = useCalendarStore()
@@ -39,23 +38,27 @@ const CalendarPage = () => {
       <NavBar />
 
       <main className='flex justify-center items-center flex-col'>
-        <Calendar
-          culture='es'
-          localizer={localizer}
-          defaultView={lastView}
-          events={events}
-          startAccessor='start'
-          endAccessor='end'
-          style={{ height: 'calc(100vh - 110px)', width: '1000px' }}
-          messages={getMessagesES()}
-          eventPropGetter={eventStyleGetter}
-          components={{
-            event: CalendarEvent
-          }}
-          onDoubleClickEvent={handleDoubleClick}
-          onSelectEvent={handleSelectEvent}
-          onView={handleViewChange}
-        />
+        <div className='relative'>
+          <Calendar
+            culture='es'
+            localizer={localizer}
+            defaultView={lastView}
+            events={events}
+            startAccessor='start'
+            endAccessor='end'
+            style={{ height: 'calc(100vh - 110px)', width: '1000px' }}
+            messages={getMessagesES()}
+            eventPropGetter={eventStyleGetter}
+            components={{
+              event: CalendarEvent
+            }}
+            onDoubleClickEvent={handleDoubleClick}
+            onSelectEvent={handleSelectEvent}
+            onView={handleViewChange}
+          />
+
+          <FabAddNew />
+        </div>
 
         <CalendarModal />
       </main>

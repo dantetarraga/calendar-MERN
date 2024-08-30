@@ -1,3 +1,5 @@
 export { default as CalendarEvent } from './components/CalendarEvent'
+export { default as CalendarModal } from './components/CalendarModal'
+export { default as FabAddNew } from './components/FabAddNew'
 export { default as NavBar } from './components/NavBar'
 export { default as Calendarpage } from './pages/CalendarPage'
