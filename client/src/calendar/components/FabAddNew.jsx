@@ -27,8 +27,8 @@ const FabAddNew = () => {
       aria-label='add-event'
       color='primary'
       size='lg'
-      variant='shadow'
-      className='absolute bottom-[25px] right-[25px] z-10'
+      variant='solid'
+      className='absolute bottom-[25px] right-[25px] z-10 rounded-full'
     >
       <Plus />
     </Button>

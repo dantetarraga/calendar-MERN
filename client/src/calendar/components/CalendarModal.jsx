@@ -31,8 +31,8 @@ const CalendarModal = ({ onOpenChange }) => {
       title: '',
       description: '',
       dateRange: {
-        startDateTime: now(getLocalTimeZone()),
-        endDateTime: now(getLocalTimeZone()).add({ hours: 1 })
+        start: now(getLocalTimeZone()),
+        end: now(getLocalTimeZone()).add({ hours: 1 })
       }
     }
   })
@@ -40,25 +40,29 @@ const CalendarModal = ({ onOpenChange }) => {
   useEffect(() => {
     if (selectedEvent !== null) {
       reset({
+        _id: selectedEvent._id,
         title: selectedEvent.title,
         description: selectedEvent.notes,
         dateRange: {
-          startDateTime: formatedDate(selectedEvent.start),
-          endDateTime: formatedDate(selectedEvent.end)
+          start: formatedDate(selectedEvent.start),
+          end: formatedDate(selectedEvent.end)
         }
       })
     }
   }, [selectedEvent])
 
   const onSubmit = async (data) => {
-    const { startDateTime, endDateTime } = data.dateRange
-    const { title, description } = data
+    const { start, end } = data.dateRange
+    const { title, description, _id } = data
 
     await startSavingEvent({
+      _id: data._id
+        ? _id
+        : null,
       title,
       notes: description,
-      start: converToDate(startDateTime),
-      end: converToDate(endDateTime),
+      start: converToDate(start),
+      end: converToDate(end),
       bgColor: randomColor(),
       user: {
         _id: 1,
@@ -66,7 +70,6 @@ const CalendarModal = ({ onOpenChange }) => {
       }
     })
     closeDateModal()
-    // onClose()
   }
 
   return (
@@ -93,12 +96,16 @@ const CalendarModal = ({ onOpenChange }) => {
                   <Controller
                     name='dateRange'
                     control={control}
-                    render={() => (
+                    render={({ field: { onChange, onBlur, value, ref } }) => (
                       <I18nProvider locale='es-ES'>
                         <DateRangePicker
                           label='Duracion del evento'
                           hideTimeZone
                           visibleMonths={2}
+                          value={value}
+                          onChange={onChange}
+                          onBlur={onBlur}
+                          ref={ref}
                           defaultValue={{
                             start: getValues('dateRange.startDateTime'),
                             end: getValues('dateRange.endDateTime')
