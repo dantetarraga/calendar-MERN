@@ -21,10 +21,10 @@ import { Save } from 'lucide-react'
 
 import { useCalendarStore } from '../../hook'
 import { useUiStore } from '../../hook/useUiStore'
-import { formatedDate } from '../../utils'
+import { converToDate, formatedDate, randomColor } from '../../utils'
 
 const CalendarModal = ({ onOpenChange }) => {
-  const { selectedEvent } = useCalendarStore()
+  const { selectedEvent, startSavingEvent } = useCalendarStore()
   const { isDateModalOpen, closeDateModal } = useUiStore()
   const { control, handleSubmit, getValues, reset } = useForm({
     defaultValues: {
@@ -50,8 +50,22 @@ const CalendarModal = ({ onOpenChange }) => {
     }
   }, [selectedEvent])
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = async (data) => {
+    const { startDateTime, endDateTime } = data.dateRange
+    const { title, description } = data
+
+    await startSavingEvent({
+      title,
+      notes: description,
+      start: converToDate(startDateTime),
+      end: converToDate(endDateTime),
+      bgColor: randomColor(),
+      user: {
+        _id: 1,
+        name: 'Carlos'
+      }
+    })
+    closeDateModal()
     // onClose()
   }
 

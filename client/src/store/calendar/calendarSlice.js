@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { addDays, addHours } from 'date-fns'
 
-function randomColor () {
-  return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')
-}
+import { randomColor } from '../../utils'
 
 const tempEvents = [
   {
@@ -152,8 +150,17 @@ export const calendarSlice = createSlice({
   reducers: {
     onSetActiveEvent: (state, { payload }) => {
       state.selectedEvent = payload
+    },
+    onAddNewEvent: (state, { payload }) => {
+      state.events.push(payload)
+      state.selectedEvent = null
+    },
+    onUpdateEvent: (state, { payload }) => {
+      const index = state.events.findIndex((event) => event._id === payload._id)
+      state.events[index] = payload
+      state.selectedEvent = null
     }
   }
 })
 
-export const { onSetActiveEvent } = calendarSlice.actions
+export const { onSetActiveEvent, onAddNewEvent } = calendarSlice.actions

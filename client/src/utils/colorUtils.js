@@ -4,3 +4,7 @@ export const hexToRgb = (hex) => {
   const b = parseInt(hex.slice(5, 7), 16)
   return { r, g, b }
 }
+
+export const randomColor = () => {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')
+}
