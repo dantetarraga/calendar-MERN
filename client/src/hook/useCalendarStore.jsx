@@ -11,10 +11,11 @@ export const useCalendarStore = () => {
   }
 
   const startSavingEvent = async (calendarEvent) => {
+    console.log(calendarEvent)
     if (calendarEvent._id) {
       dispatch(onUpdateEvent({ ...calendarEvent }))
     } else {
-      dispatch(onAddNewEvent({ ...calendarEvent, _id: new Date() }))
+      dispatch(onAddNewEvent({ ...calendarEvent, _id: new Date().toISOString() }))
     }
   }
 
