@@ -2,6 +2,8 @@ class AuthController {
   static async register (req, res) {
     const { name, lastName, email, password } = req.body
 
+    console.log(name, lastName, email, password)
+
     return res.json({
       ok: true,
       message: 'User registered'
