@@ -1,9 +1,10 @@
+import { generateToken } from '../helpers/jwt.js'
 import { User } from '../models/User.js'
 import bycrypt from 'bcryptjs'
 
 class AuthController {
   static async register (req, res) {
-    const { name, lastName, email, password } = req.body
+    const { firstName, lastName, email, password } = req.body
 
     let user = await User.findOne({ email })
 
@@ -14,7 +15,7 @@ class AuthController {
       })
     }
 
-    user = new User({ name, lastName, email, password })
+    user = new User({ firstName, lastName, email, password })
 
     const salt = bycrypt.genSaltSync()
     user.password = bycrypt.hashSync(password, salt)
@@ -24,13 +25,18 @@ class AuthController {
     if (!savedUser) {
       return res.status(500).json({
         ok: false,
-        msg: 'Internal server error'
+        message: 'Internal server error'
       })
     }
 
+    const token = await generateToken(user.id, user.name)
+
     return res.status(201).json({
       ok: true,
-      message: 'User registered'
+      message: 'User registered',
+      uui: user.id,
+      fullName: `${user.firstName} ${user.lastName}`,
+      token
     })
   }
 
@@ -57,7 +63,11 @@ class AuthController {
 
     return res.json({
       ok: true,
-      message: 'User logged in'
+      message: 'User logged in',
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email
+
     })
   }
 
