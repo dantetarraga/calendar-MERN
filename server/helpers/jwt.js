@@ -7,7 +7,7 @@ export const generateToken = (uid, name) => {
       expiresIn: '2h'
     }, (err, token) => {
       if (err) {
-        console.log(err)
+        console.log('Could not generate token', err)
         reject(new Error('Could not generate token'))
       }
       resolve(token)

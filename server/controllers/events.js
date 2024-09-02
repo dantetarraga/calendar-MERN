@@ -15,7 +15,11 @@ class EventsController {
     const { title, start, end, description } = req.body
     const user = req.user._id
 
-    const event = new Event({ title, start, end, description, user })
+    const eventData = { title, start, end, user }
+
+    if (description !== undefined) eventData.description = description
+
+    const event = new Event(eventData)
     await event.save()
 
     res.status(201).json({

@@ -1,5 +1,5 @@
 import { check } from 'express-validator'
-import { isDate } from '../helpers/isDate'
+import { isDate } from '../helpers/isDate.js'
 
 export const eventValidator = [
   check('title', 'Title is required').not().isEmpty(),
