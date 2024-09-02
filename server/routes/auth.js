@@ -7,7 +7,7 @@ const authRouter = Router()
 
 authRouter.post(
   '/',
-  [...emailValidator, ...passwordValidator],
+  [...emailValidator],
   validatorFields,
   AuthController.login
 )
