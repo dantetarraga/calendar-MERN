@@ -11,12 +11,14 @@ authRouter.post(
   validatorFields,
   AuthController.login
 )
+
 authRouter.post(
   '/register',
   [...fullNameValidator, ...emailValidator, ...passwordValidator],
   validatorFields,
   AuthController.register
 )
+
 authRouter.get('/refreshToken', AuthController.refreshToken)
 
 export default authRouter

@@ -1,10 +1,12 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import authRouter from './routes/auth.js'
+import connectDB from './database/config.js'
 
 dotenv.config()
 
 const app = express()
+connectDB()
 
 app.use(express.static('public'))
 app.use(express.json())
