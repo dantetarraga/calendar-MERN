@@ -29,12 +29,12 @@ class AuthController {
       })
     }
 
-    const token = await generateToken(user.id, user.name)
+    const token = await generateToken(user.id, user.firstName)
 
     return res.status(201).json({
       ok: true,
       message: 'User registered',
-      uui: user.id,
+      uid: user.id,
       fullName: `${user.firstName} ${user.lastName}`,
       token
     })
@@ -61,20 +61,27 @@ class AuthController {
       })
     }
 
+    const token = await generateToken(user.id, user.firstName)
+
     return res.json({
       ok: true,
       message: 'User logged in',
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email
-
+      uid: user.id,
+      fullName: `${user.firstName} ${user.lastName}`,
+      email: user.email,
+      token
     })
   }
 
   static async refreshToken (req, res) {
+    const { uid, name } = req
+
+    const token = await generateToken(uid, name)
+
     res.json({
       ok: true,
-      message: 'Refresh token'
+      message: 'Refresh token',
+      token
     })
   }
 }

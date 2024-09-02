@@ -1,7 +1,12 @@
 import { Router } from 'express'
 import AuthController from '../controllers/auth.js'
 import { validatorFields } from '../middlewares/validatorFields.js'
-import { emailValidator, fullNameValidator, passwordValidator } from '../validators/index.js'
+import {
+  emailValidator,
+  fullNameValidator,
+  passwordValidator
+} from '../validators/index.js'
+import { validateToken } from '../middlewares/validateToken.js'
 
 const authRouter = Router()
 
@@ -19,6 +24,6 @@ authRouter.post(
   AuthController.register
 )
 
-authRouter.get('/refreshToken', AuthController.refreshToken)
+authRouter.get('/refreshToken', validateToken, AuthController.refreshToken)
 
 export default authRouter
