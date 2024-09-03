@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { validateToken } from '../middlewares/validateToken.js'
 import { eventValidator } from '../validators/index.js'
 import { validatorFields } from '../middlewares/validatorFields.js'
+import EventsController from '../controllers/events.js'
 
 const eventsRouter = Router()
 
@@ -16,7 +17,12 @@ eventsRouter.get('/', [...eventValidator], validatorFields, (req, res) => {
   })
 })
 eventsRouter.put('/update/:id')
-eventsRouter.post('/create')
+eventsRouter.post(
+  '/create',
+  [...eventValidator],
+  validatorFields,
+  EventsController.createEvent
+)
 eventsRouter.delete('/delete/:id')
 
 export default eventsRouter

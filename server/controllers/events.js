@@ -13,7 +13,7 @@ class EventsController {
 
   static async createEvent (req, res) {
     const { title, start, end, description } = req.body
-    const user = req.user._id
+    const user = req.uid
 
     const eventData = { title, start, end, user }
 
