@@ -23,6 +23,6 @@ eventsRouter.post(
   validatorFields,
   EventsController.createEvent
 )
-eventsRouter.delete('/delete/:id')
+eventsRouter.delete('/delete/:id', validateToken, EventsController.deleteEvent)
 
 export default eventsRouter
