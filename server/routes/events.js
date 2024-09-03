@@ -11,7 +11,12 @@ eventsRouter.use(validateToken)
 
 // Routes
 eventsRouter.get('/', EventsController.getEvents)
-eventsRouter.put('/update/:id')
+eventsRouter.put(
+  '/update/:id',
+  [...eventValidator],
+  validateToken,
+  EventsController.updateEvent
+)
 eventsRouter.post(
   '/create',
   [...eventValidator],

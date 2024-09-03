@@ -1,12 +1,11 @@
 import { Event } from '../models/Events.js'
-
 class EventsController {
   static async getEvents (req, res) {
-    const events = await Event.find().populate('user', 'name email')
+    const events = await Event.find().populate('user', 'firstName lastName email')
 
     res.status(200).json({
       ok: true,
-      message: 'Events fetched successfully',
+      message: 'Events retrieved successfully',
       events
     })
   }
@@ -20,13 +19,61 @@ class EventsController {
     if (description !== undefined) eventData.description = description
 
     const event = new Event(eventData)
-    await event.save()
+    const newEvent = await event.save()
 
-    res.status(201).json({
+    if (!newEvent) {
+      return res.status(500).json({
+        ok: false,
+        message: 'Error creating event'
+      })
+    }
+
+    return res.status(201).json({
       ok: true,
       message: 'Event created successfully',
       event
     })
+  }
+
+  static async updateEvent (req, res) {
+    const eventId = req.params.id
+    const uid = req.uid
+
+    try {
+      const event = await Event.findById(eventId)
+
+      if (!event) {
+        return res.status(404).json({
+          ok: false,
+          message: 'Event not found'
+        })
+      }
+
+      if (event.user.toString() !== uid) {
+        return res.status(401).json({
+          ok: false,
+          message: 'Unauthorized'
+        })
+      }
+
+      const newEvent = {
+        ...req.body,
+        user: uid
+      }
+
+      const updatedEvent = await Event.findByIdAndUpdate(eventId, newEvent, { new: true })
+
+      return res.status(200).json({
+        ok: true,
+        message: 'Event updated successfully',
+        event: updatedEvent
+      })
+    } catch (error) {
+      return res.status(500).json({
+        ok: false,
+        message: 'Error updating event'
+      })
+    }
   }
 }
 
