@@ -10,12 +10,7 @@ const eventsRouter = Router()
 eventsRouter.use(validateToken)
 
 // Routes
-eventsRouter.get('/', [...eventValidator], validatorFields, (req, res) => {
-  res.json({
-    ok: true,
-    msg: 'getEvents'
-  })
-})
+eventsRouter.get('/', EventsController.getEvents)
 eventsRouter.put('/update/:id')
 eventsRouter.post(
   '/create',

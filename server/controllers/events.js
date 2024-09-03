@@ -2,7 +2,7 @@ import { Event } from '../models/Events.js'
 
 class EventsController {
   static async getEvents (req, res) {
-    const events = await Event.find()
+    const events = await Event.find().populate('user', 'name email')
 
     res.status(200).json({
       ok: true,

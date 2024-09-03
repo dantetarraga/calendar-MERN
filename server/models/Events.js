@@ -14,8 +14,7 @@ const EventSchema = new Schema({
     required: true
   },
   description: {
-    type: String,
-    required: true
+    type: String
   },
   user: {
     type: Schema.Types.ObjectId,
