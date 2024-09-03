@@ -1,15 +1,18 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 import { Button } from '@nextui-org/react'
 import { Lock, Mail } from 'lucide-react'
+import Swal from 'sweetalert2'
 
-import { sleep } from '../../utils'
+import { useAuthStore } from '../../hook'
 import FormField from '../components/FormField'
 import useToggle from '../hooks/useToggle'
 import AuthLayout from '../layout/AuthLayout'
 
 const LoginPage = () => {
+  const { startLogin, errorMessage } = useAuthStore()
   const [showPassword, setShowPassword] = useToggle(false)
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -18,10 +21,12 @@ const LoginPage = () => {
     }
   })
 
+  useEffect(() => {
+    if (errorMessage !== undefined) Swal.fire('Error en la autententicación', errorMessage, 'error')
+  }, [errorMessage])
+
   const onSubmit = (data) => {
-    sleep(2000)
-    console.log('Form submitted')
-    console.log(data)
+    startLogin(data)
   }
 
   return (
