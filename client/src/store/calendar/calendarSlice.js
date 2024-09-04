@@ -1,49 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { addDays, addHours } from 'date-fns'
 
 import { randomColor } from '../../utils'
 
-const tempEvents = [
-  {
-    _id: 1,
-    title: 'Reunión de equipo',
-    notes: 'Discutir los avances del proyecto',
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgColor: randomColor(),
-    user: {
-      _id: 1,
-      name: 'Juan'
-    }
-  },
-  {
-    _id: 2,
-    title: 'Reunión de equipo',
-    notes: 'Discutir los avances del proyecto',
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgColor: randomColor(),
-    user: {
-      _id: 1,
-      name: 'Mario'
-    }
-  },
-  {
-    _id: 3,
-    title: 'Presentación de ventas',
-    notes: 'Presentar nuevo producto a cliente potencial',
-    start: addHours(addDays(new Date(), 2), 2),
-    end: addHours(addDays(new Date(), 2), 4),
-    bgColor: randomColor(),
-    user: {
-      _id: 2,
-      name: 'María'
-    }
-  }
-]
-
 const initialState = {
-  events: [...tempEvents],
+  events: [],
+  isLoadingEvents: true,
   selectedEvent: null
 }
 
@@ -70,6 +31,14 @@ export const calendarSlice = createSlice({
         state.events = state.events.filter(event => event._id !== state.selectedEvent._id)
         state.selectedEvent = null
       }
+    },
+    onLoadEvents: (state, { payload = [] }) => {
+      state.isLoadingEvents = false
+      payload.forEach(event => {
+        const exist = state.events.some(dbEvent => dbEvent.id === event.id)
+        const { description, ...rest } = event
+        if (!exist) state.events.push({ ...rest, notes: description, bgColor: randomColor() })
+      })
     }
   }
 })
@@ -77,5 +46,7 @@ export const calendarSlice = createSlice({
 export const {
   onSetActiveEvent,
   onAddNewEvent,
-  onUpdateEvent, onDeleteEvent
+  onUpdateEvent,
+  onDeleteEvent,
+  onLoadEvents
 } = calendarSlice.actions

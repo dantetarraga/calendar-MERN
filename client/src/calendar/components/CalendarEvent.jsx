@@ -1,10 +1,11 @@
 const CalendarEvent = ({ event }) => {
   const { title, user } = event
+  const fullName = `${user.firstName} ${user.lastName}`
 
   return (
     <>
       <strong>{title}</strong>
-      <span>- {user.name}</span>
+      <span>- {fullName}</span>
     </>
   )
 }
