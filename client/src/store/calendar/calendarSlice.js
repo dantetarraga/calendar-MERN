@@ -39,6 +39,11 @@ export const calendarSlice = createSlice({
         const { description, ...rest } = event
         if (!exist) state.events.push({ ...rest, notes: description, bgColor: randomColor() })
       })
+    },
+    onLogoutCalendar: (state) => {
+      state.events = []
+      state.isLoadingEvents = true
+      state.selectedEvent = null
     }
   }
 })
@@ -48,5 +53,6 @@ export const {
   onAddNewEvent,
   onUpdateEvent,
   onDeleteEvent,
-  onLoadEvents
+  onLoadEvents,
+  onLogoutCalendar
 } = calendarSlice.actions
