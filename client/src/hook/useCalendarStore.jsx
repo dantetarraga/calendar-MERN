@@ -1,8 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux'
 
+import Swal from 'sweetalert2'
+
 import { calendarApi } from '../api'
 import { convertEventsToDateEvents } from '../helpers'
-import { onAddNewEvent, onDeleteEvent, onLoadEvents, onSetActiveEvent, onUpdateEvent } from '../store'
+import {
+  onAddNewEvent,
+  onDeleteEvent,
+  onLoadEvents,
+  onSetActiveEvent,
+  onUpdateEvent
+} from '../store'
 
 export const useCalendarStore = () => {
   const { events, selectedEvent } = useSelector((state) => state.calendar)
@@ -14,16 +22,38 @@ export const useCalendarStore = () => {
   }
 
   const startSavingEvent = async (calendarEvent) => {
-    if (calendarEvent._id) {
-      dispatch(onUpdateEvent({ ...calendarEvent }))
-    } else {
-      const { data } = await calendarApi.post('/events/create', calendarEvent)
+    const { notes, ...rest } = calendarEvent
+    try {
+      if (calendarEvent.id) {
+        const { data } = await calendarApi.put(
+          `/events/update/${calendarEvent.id}`,
+          { ...rest, description: notes }
+        )
+        dispatch(onUpdateEvent({ ...calendarEvent, id: data.event.id, user }))
+        return
+      }
+      const { data } = await calendarApi.post('/events/create', {
+        ...rest,
+        description: notes,
+        user
+      })
       dispatch(onAddNewEvent({ ...calendarEvent, id: data.event.id, user }))
+    } catch (error) {
+      console.log(error)
+      Swal.fire('Error al guardar', error.response.data?.message, 'error')
     }
   }
 
   const startDeletingEvent = async () => {
-    dispatch(onDeleteEvent())
+    const { id } = selectedEvent
+    try {
+      const { data } = await calendarApi.delete(`/events/delete/${id}`)
+      if (data.ok) Swal.fire('Evento eliminado', 'El evento fue eliminado correctamente', 'success')
+      dispatch(onDeleteEvent())
+    } catch (error) {
+      console.log(error)
+      Swal.fire('Error al eliminar', error.response.data?.message, 'error')
+    }
   }
 
   const startLoadingEvents = async () => {

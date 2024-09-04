@@ -83,7 +83,8 @@ class AuthController {
       ok: true,
       message: 'Refresh token',
       token,
-      fullName
+      fullName,
+      uid
     })
   }
 }

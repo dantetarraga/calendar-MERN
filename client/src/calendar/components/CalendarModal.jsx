@@ -40,7 +40,7 @@ const CalendarModal = ({ onOpenChange }) => {
   useEffect(() => {
     if (selectedEvent !== null) {
       reset({
-        _id: selectedEvent._id,
+        id: selectedEvent.id,
         title: selectedEvent.title,
         description: selectedEvent.notes,
         dateRange: {
@@ -53,21 +53,17 @@ const CalendarModal = ({ onOpenChange }) => {
 
   const onSubmit = async (data) => {
     const { start, end } = data.dateRange
-    const { title, description, _id } = data
+    const { title, description, id } = data
 
     await startSavingEvent({
-      _id: data._id
-        ? _id
+      id: data.id
+        ? id
         : null,
       title,
       notes: description,
       start: converToDate(start),
       end: converToDate(end),
-      bgColor: randomColor(),
-      user: {
-        _id: 1,
-        name: 'Carlos'
-      }
+      bgColor: randomColor()
     })
     closeDateModal()
   }

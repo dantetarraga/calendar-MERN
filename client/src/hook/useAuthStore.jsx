@@ -11,6 +11,7 @@ export const useAuthStore = () => {
     dispatch(onChecking())
     try {
       const { data } = await calendarApi.post('/auth/', { email, password })
+      console.log(data)
       localStorage.setItem('token', data.token)
       dispatch(onLogin({ fullName: data.fullName, uid: data.uid }))
     } catch (error) {
@@ -26,7 +27,7 @@ export const useAuthStore = () => {
     try {
       const { data } = await calendarApi.post('/auth/register', { email, password, firstName, lastName })
       localStorage.setItem('token', data.token)
-      dispatch(onLogin({ fullName: data.fullName, uid: data.uid }))
+      dispatch(onLogin({ fullName: data.fullName, uid: data.uid, firstName, lastName }))
     } catch (error) {
       dispatch(onLogout('Error al registrar el usuario'))
       setTimeout(() => {
@@ -49,8 +50,9 @@ export const useAuthStore = () => {
 
     try {
       const { data } = await calendarApi.get('/auth/refreshToken')
+      const [firstName, lastName] = data.fullName.split(' ')
       localStorage.setItem('token', data.token)
-      dispatch(onLogin({ fullName: data.fullName, uid: data.uid }))
+      dispatch(onLogin({ fullName: data.fullName, uid: data.uid, firstName, lastName }))
     } catch (error) {
       dispatch(onLogout())
     }
