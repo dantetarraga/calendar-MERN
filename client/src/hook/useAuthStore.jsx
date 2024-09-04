@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 import { calendarApi } from '../api'
-import { clearErrorMessage, onLogin, onLogout } from '../store'
+import { clearErrorMessage, onChecking, onLogin, onLogout } from '../store'
 
 export const useAuthStore = () => {
   const dispatch = useDispatch()
   const { status, user, errorMessage } = useSelector((state) => state.auth)
 
   const startLogin = async ({ email, password }) => {
+    dispatch(onChecking())
     try {
       const { data } = await calendarApi.post('/auth/', { email, password })
       localStorage.setItem('token', data.token)
@@ -20,8 +21,40 @@ export const useAuthStore = () => {
     }
   }
 
+  const startRegister = async ({ email, password, firstName, lastName }) => {
+    dispatch(onChecking())
+    try {
+      const { data } = await calendarApi.post('/auth/register', { email, password, firstName, lastName })
+      localStorage.setItem('token', data.token)
+      dispatch(onLogin({ fullName: data.fullName, uid: data.uid }))
+    } catch (error) {
+      dispatch(onLogout('Error al registrar el usuario'))
+      setTimeout(() => {
+        dispatch(clearErrorMessage())
+      }, 10)
+    }
+  }
+
+  const checkAuthToken = async () => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      dispatch(onLogout())
+      return
+    }
+
+    try {
+      const { data } = await calendarApi.get('/auth/refreshToken')
+      localStorage.setItem('token', data.token)
+      dispatch(onLogin({ fullName: data.fullName, uid: data.uid }))
+    } catch (error) {
+      dispatch(onLogout())
+    }
+  }
+
   return {
     startLogin,
+    startRegister,
+    checkAuthToken,
 
     status,
     user,

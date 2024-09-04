@@ -1,14 +1,18 @@
 import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { Button } from '@nextui-org/react'
 import { Lock, Mail, User } from 'lucide-react'
 
+import { useAuthStore } from '../../hook'
 import FormField from '../components/FormField'
 import useToggle from '../hooks/useToggle'
 import AuthLayout from '../layout/AuthLayout'
 
 const RegisterPage = () => {
+  const dispatch = useDispatch()
+  const { startRegister, errorMessage } = useAuthStore()
   const [showPassword, setShowPassword] = useToggle(false)
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -19,12 +23,16 @@ const RegisterPage = () => {
     }
   })
 
+  const onSubmit = (data) => {
+    startRegister(data)
+  }
+
   return (
     <AuthLayout
       title='Welcome to Your Personal Calendar'
       subtitle='Organize your time, plan your days, and never miss an important event.'
     >
-      <form className='space-y-5'>
+      <form className='space-y-5' onSubmit={handleSubmit(onSubmit)}>
         <div className='grid md:grid-cols-2 gap-5 grid-cols-1'>
           <FormField
             control={control}
@@ -69,11 +77,13 @@ const RegisterPage = () => {
           icon={<Lock />}
           showPassword={showPassword}
           onShowPassword={setShowPassword}
-          rules={{ required: 'Password is required' }}
+          rules={{
+            required: 'Password is required',
+            minLength: { value: 6, message: 'Password must be at least 6 characters long' }
+          }}
         />
 
         <Button
-          onClick={handleSubmit((data) => console.log(data))}
           block
           className='w-full bg-black text-white'
           type='submit'
