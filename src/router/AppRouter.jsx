@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { AuthRouter } from '../auth'
 import CalendarPage from '../calendar/pages/CalendarPage'
+import Loading from '../components/Loading'
 import { useAuthStore } from '../hook'
 
 const AppRouter = () => {
@@ -14,7 +15,7 @@ const AppRouter = () => {
 
   if (status === 'checking') {
     return (
-      <h1>Cargando...</h1>
+      <Loading />
     )
   }
 
