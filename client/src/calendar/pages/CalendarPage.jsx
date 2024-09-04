@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Calendar } from 'react-big-calendar'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -11,9 +11,13 @@ import { CalendarEvent, CalendarModal, FabAddNew, NavBar } from '../'
 import FabDeleteEvent from '../components/FabDeleteEvent'
 
 const CalendarPage = () => {
-  const { events, setActiveEvent } = useCalendarStore()
+  const { events, setActiveEvent, startLoadingEvents } = useCalendarStore()
   const { openDateModal } = useUiStore()
   const [lastView] = useState(localStorage.getItem('lastView') || 'week')
+
+  useEffect(() => {
+    startLoadingEvents()
+  }, [])
 
   // eslint-disable-next-line no-unused-vars
   const eventStyleGetter = (event, start, end, isSelected) => {
